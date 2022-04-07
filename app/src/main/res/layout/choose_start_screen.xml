@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radio_group_select_screen"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_separator" />
+
+    <RadioButton
+        android:id="@+id/radio_screen_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/radio_button_margin"
+        android:layout_marginStart="@dimen/radio_button_margin"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/radio_button_margin"
+        android:paddingStart="@dimen/radio_button_margin"
+        android:paddingTop="10dp"
+        android:text="@string/check_start_screen_a"
+        android:textAlignment="textStart" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_separator" />
+
+    <RadioButton
+        android:id="@+id/radio_screen_b"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/radio_button_margin"
+        android:layout_marginStart="@dimen/radio_button_margin"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/radio_button_margin"
+        android:paddingStart="@dimen/radio_button_margin"
+        android:paddingTop="10dp"
+        android:text="@string/check_start_screen_b"
+        android:textAlignment="textStart" />
+
+    <View
+        android:id="@+id/middle_separator"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_separator" />
+
+    <RadioButton
+        android:id="@+id/radio_screen_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/radio_button_margin"
+        android:layout_marginStart="@dimen/radio_button_margin"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/radio_button_margin"
+        android:paddingStart="@dimen/radio_button_margin"
+        android:paddingTop="10dp"
+        android:text="@string/check_start_screen_c"
+        android:textAlignment="textStart" />
+
+    <View
+        android:id="@+id/bottom_separator"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_separator" />
+
+</RadioGroup>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">My Assignment</string>
+
+    <string name="show_valid_spot_settings_label">Show valid dot</string>
+
+    <!-- Choose start screen -->
+    <string name="choose_start_screen_header">Select the start screen for the app</string>
+    <string name="choose_start_screen_title">Screen settings</string>
+    <string name="settings_choose_start_screen">Screen settings</string>
+    <string name="check_start_screen_a">Screen A</string>
+    <string name="check_start_screen_b">Screen B</string>
+    <string name="check_start_screen_c">Screen C</string>
+
+    <!--Choose viewing options-->
+    <string name="check_view_options_label">Select viewing option</string>
+    <string name="check_view_options_name">Show name</string>
+    <string name="check_view_options_date">Show date</string>
+    <string name="check_view_options_nothing">Show nothing</string>
+</resources>
