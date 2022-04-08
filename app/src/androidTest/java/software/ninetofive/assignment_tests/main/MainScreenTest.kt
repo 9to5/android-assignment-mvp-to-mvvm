@@ -54,6 +54,22 @@ class MainScreenTest {
     }
 
     @Test
+    fun selectViewingOptionInteractions() {
+        appPreferences.setViewingOption(ViewingOption.DATE)
+
+        launchMainScreen {
+            checkViewingOptionsHeader()
+            checkSelectedViewingOptionIs(ViewingOption.DATE)
+            tapOnNothingOption()
+            checkSelectedViewingOptionIs(ViewingOption.NOTHING)
+            tapOnShowNameOption()
+            checkSelectedViewingOptionIs(ViewingOption.SHOW_NAME)
+            tapOnDateOption()
+            checkSelectedViewingOptionIs(ViewingOption.DATE)
+        }
+    }
+
+    @Test
     fun defaultShowValidDotValue() {
         launchMainScreen {
             checkShowValidDotOptionSelected(false)

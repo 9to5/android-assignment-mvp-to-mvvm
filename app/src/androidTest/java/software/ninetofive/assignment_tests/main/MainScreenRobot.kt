@@ -48,6 +48,18 @@ class MainScreenRobot {
         onView(withText(R.string.check_view_options_label)).check(matches(isDisplayed()))
     }
 
+    fun tapOnShowNameOption() {
+        onView(withText(R.string.check_view_options_name)).perform(click())
+    }
+
+    fun tapOnDateOption() {
+        onView(withText(R.string.check_view_options_date)).perform(click())
+    }
+
+    fun tapOnNothingOption() {
+        onView(withText(R.string.check_view_options_nothing)).perform(click())
+    }
+
     fun checkSelectedViewingOptionIs(viewingOption: ViewingOption) {
         val showNameSelected = if (viewingOption == SHOW_NAME) isChecked() else isNotChecked()
         val showDateSelected = if (viewingOption == DATE) isChecked() else isNotChecked()
