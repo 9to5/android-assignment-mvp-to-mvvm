@@ -15,6 +15,15 @@ class AppPreferencesTest {
         assertEquals(SelectedScreen.SCREEN_C, appPreferences.getStartScreen())
     }
 
+    @Test
+    fun selectedScreenA() {
+        val appPreferences = TestableAppPreferences()
+
+        appPreferences.setStartScreen(SelectedScreen.SCREEN_A)
+
+        assertEquals(SelectedScreen.SCREEN_A, appPreferences.getStartScreen())
+    }
+
     class TestableAppPreferences : AppPreferences(null) {
 
         override fun getPreferences(context: Context?): SharedPreferences? {
