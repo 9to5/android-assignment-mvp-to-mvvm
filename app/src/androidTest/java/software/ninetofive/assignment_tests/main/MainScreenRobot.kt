@@ -2,6 +2,7 @@ package software.ninetofive.assignment_tests.main
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import software.ninetofive.assignment_tests.R
@@ -19,6 +20,18 @@ class MainScreenRobot {
 
     fun checkSelectedScreenHeaderShown() {
         onView(withText(R.string.choose_start_screen_header)).check(matches(isDisplayed()))
+    }
+
+    fun tapOnScreenAOption() {
+        onView(withText(R.string.check_start_screen_a)).perform(click())
+    }
+
+    fun tapOnScreenBOption() {
+        onView(withText(R.string.check_start_screen_b)).perform(click())
+    }
+
+    fun tapOnScreenCOption() {
+        onView(withText(R.string.check_start_screen_c)).perform(click())
     }
 
     fun checkSelectedScreenOptionIs(selectedScreen: SelectedScreen) {

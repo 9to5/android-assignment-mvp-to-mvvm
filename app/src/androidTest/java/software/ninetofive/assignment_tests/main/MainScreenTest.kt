@@ -30,6 +30,22 @@ class MainScreenTest {
     }
 
     @Test
+    fun selectScreenOptionInteractions() {
+        appPreferences.setStartScreen(SelectedScreen.SCREEN_A)
+
+        launchMainScreen {
+            checkSelectedScreenHeaderShown()
+            checkSelectedScreenOptionIs(SelectedScreen.SCREEN_A)
+            tapOnScreenBOption()
+            checkSelectedScreenOptionIs(SelectedScreen.SCREEN_B)
+            tapOnScreenCOption()
+            checkSelectedScreenOptionIs(SelectedScreen.SCREEN_C)
+            tapOnScreenAOption()
+            checkSelectedScreenOptionIs(SelectedScreen.SCREEN_A)
+        }
+    }
+
+    @Test
     fun defaultViewingOptionValue() {
         launchMainScreen {
             checkViewingOptionsHeader()
