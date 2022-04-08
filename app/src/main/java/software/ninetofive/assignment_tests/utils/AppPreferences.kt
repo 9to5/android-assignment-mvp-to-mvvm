@@ -14,7 +14,8 @@ import javax.inject.Singleton
 
 @Singleton
 open class AppPreferences @Inject constructor(
-    @ApplicationContext context: Context?
+    @ApplicationContext context: Context?,
+    private val sharedPreferences: SharedPreferences?
 ) {
     companion object {
         private const val PREFERENCES_NAME = "app_prefs"
@@ -23,7 +24,7 @@ open class AppPreferences @Inject constructor(
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
     }
 
-    private val preferences: SharedPreferences = getPreferences(context)
+    private val preferences: SharedPreferences = sharedPreferences ?: getPreferences(context)
         ?: throw IllegalStateException("Valid context is required!")
 
     protected open fun getPreferences(context: Context?) =
