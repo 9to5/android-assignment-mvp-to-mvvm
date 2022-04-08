@@ -77,6 +77,13 @@ class AppPreferencesTest {
         assertEquals(ViewingOption.NOTHING, appPreferences.getViewingOption())
     }
 
+    @Test
+    fun defaultShowValidDot() {
+        val appPreferences = TestableAppPreferences()
+
+        assertEquals(false, appPreferences.shouldShowValidDot())
+    }
+
     class TestableAppPreferences : AppPreferences(null) {
 
         override fun getPreferences(context: Context?): SharedPreferences? {
@@ -118,7 +125,7 @@ class AppPreferencesTest {
         }
 
         override fun getBoolean(key: String?, defaultValue: Boolean): Boolean {
-            TODO("Not yet implemented")
+            return valuesMap.getOrDefault(key, defaultValue) as Boolean
         }
 
         override fun contains(key: String?): Boolean {
