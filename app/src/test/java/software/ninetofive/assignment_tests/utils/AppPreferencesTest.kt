@@ -11,14 +11,14 @@ class AppPreferencesTest {
 
     @Test
     fun defaultSelectedScreen() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         assertEquals(SelectedScreen.SCREEN_C, appPreferences.getStartScreen())
     }
 
     @Test
     fun selectedScreenA() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         appPreferences.setStartScreen(SelectedScreen.SCREEN_A)
 
@@ -27,7 +27,7 @@ class AppPreferencesTest {
 
     @Test
     fun selectedScreenB() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         appPreferences.setStartScreen(SelectedScreen.SCREEN_B)
 
@@ -36,7 +36,7 @@ class AppPreferencesTest {
 
     @Test
     fun selectedScreenC() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         appPreferences.setStartScreen(SelectedScreen.SCREEN_C)
 
@@ -45,14 +45,14 @@ class AppPreferencesTest {
 
     @Test
     fun defaultViewingOption() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         assertEquals(ViewingOption.NOTHING, appPreferences.getViewingOption())
     }
 
     @Test
     fun selectedShowName() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         appPreferences.setViewingOption(ViewingOption.SHOW_NAME)
 
@@ -61,7 +61,7 @@ class AppPreferencesTest {
 
     @Test
     fun selectedDate() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         appPreferences.setViewingOption(ViewingOption.DATE)
 
@@ -70,7 +70,7 @@ class AppPreferencesTest {
 
     @Test
     fun selectedNothing() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         appPreferences.setViewingOption(ViewingOption.NOTHING)
 
@@ -79,14 +79,14 @@ class AppPreferencesTest {
 
     @Test
     fun defaultShowValidDot() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         assertEquals(false, appPreferences.shouldShowValidDot())
     }
 
     @Test
     fun toggleShowValidDot() {
-        val appPreferences = TestableAppPreferences(InMemorySharedPreferences())
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
 
         appPreferences.setShowValidDot(true)
 
