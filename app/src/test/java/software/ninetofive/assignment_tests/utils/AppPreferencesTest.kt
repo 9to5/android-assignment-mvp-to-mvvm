@@ -33,15 +33,16 @@ class AppPreferencesTest {
 
     private class InMemorySharedPreferences : SharedPreferences {
 
-        private var selectedScreen: String? = ""
-        private val editor = Editor()
+        private val valuesMap = HashMap<String, Any?>()
+        private val uncommittedValuesMap = HashMap<String, Any?>()
+        private val editor = Editor(valuesMap, uncommittedValuesMap)
 
         override fun getAll(): MutableMap<String, *> {
             TODO("Not yet implemented")
         }
 
         override fun getString(key: String?, defaultValue: String?): String? {
-            return selectedScreen
+            return valuesMap.getOrDefault(key, defaultValue) as? String?
         }
 
         override fun getStringSet(
@@ -85,15 +86,18 @@ class AppPreferencesTest {
             TODO("Not yet implemented")
         }
 
-        inner class Editor: SharedPreferences.Editor {
+        inner class Editor(
+            private val valuesMap: MutableMap<String, Any?>,
+            private val uncommittedValuesMap: MutableMap<String, Any?>
+        ) : SharedPreferences.Editor {
 
-            override fun putString(key: String?, value: String?): SharedPreferences.Editor {
-                selectedScreen = value
+            override fun putString(key: String, value: String?): SharedPreferences.Editor {
+                uncommittedValuesMap[key] = value
                 return this
             }
 
             override fun putStringSet(
-                key: String?,
+                key: String,
                 value: MutableSet<String>?
             ): SharedPreferences.Editor {
                 TODO("Not yet implemented")
@@ -115,20 +119,27 @@ class AppPreferencesTest {
                 TODO("Not yet implemented")
             }
 
-            override fun remove(key: String?): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+            override fun remove(key: String): SharedPreferences.Editor {
+                uncommittedValuesMap.remove(key)
+                return this
             }
 
             override fun clear(): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                uncommittedValuesMap.clear()
+                valuesMap.clear()
+                return this
             }
 
             override fun commit(): Boolean {
-                TODO("Not yet implemented")
+                uncommittedValuesMap.forEach {
+                    valuesMap[it.key] = it.value
+                }
+                uncommittedValuesMap.clear()
+                return true
             }
 
             override fun apply() {
-
+                commit()
             }
         }
     }
