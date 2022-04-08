@@ -35,6 +35,16 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    sourceSets {
+        def sharedTestDirectory = "src/sharedTest/java"
+        test {
+            java.srcDir sharedTestDirectory
+        }
+        androidTest {
+            java.srcDir sharedTestDirectory
+        }
+    }
 }
 
 ext.rxbindingVersion = '2.1.1'
