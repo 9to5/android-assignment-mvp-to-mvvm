@@ -31,4 +31,12 @@ class MainScreenTest {
             checkSelectedScreenOptionIs(SelectedScreen.SCREEN_B)
         }
     }
+
+    @Test
+    fun defaultViewingOptionValue() {
+        launchMainScreen {
+            checkViewingOptionsHeader()
+            checkSelectedViewingOptionIs(ViewingOption.NOTHING)
+        }
+    }
 }

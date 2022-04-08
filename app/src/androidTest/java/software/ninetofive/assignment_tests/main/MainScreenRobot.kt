@@ -6,6 +6,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import software.ninetofive.assignment_tests.R
 import software.ninetofive.assignment_tests.main.SelectedScreen.*
+import software.ninetofive.assignment_tests.main.ViewingOption.*
 
 fun launchMainScreen(
     block: MainScreenRobot.() -> Unit
@@ -28,5 +29,19 @@ class MainScreenRobot {
         onView(withId(R.id.radio_screen_a)).check(matches(screenASelected))
         onView(withId(R.id.radio_screen_b)).check(matches(screenBSelected))
         onView(withId(R.id.radio_screen_c)).check(matches(screenCSelected))
+    }
+
+    fun checkViewingOptionsHeader() {
+        onView(withText(R.string.check_view_options_label)).check(matches(isDisplayed()))
+    }
+
+    fun checkSelectedViewingOptionIs(viewingOption: ViewingOption) {
+        val showNameSelected = if (viewingOption == SHOW_NAME) isChecked() else isNotChecked()
+        val showDateSelected = if (viewingOption == DATE) isChecked() else isNotChecked()
+        val showNothingSelected = if (viewingOption == NOTHING) isChecked() else isNotChecked()
+
+        onView(withId(R.id.radio_show_name)).check(matches(showNameSelected))
+        onView(withId(R.id.radio_show_date)).check(matches(showDateSelected))
+        onView(withId(R.id.radio_show_nothing)).check(matches(showNothingSelected))
     }
 }
