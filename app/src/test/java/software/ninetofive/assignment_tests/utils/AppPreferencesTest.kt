@@ -50,6 +50,15 @@ class AppPreferencesTest {
         assertEquals(ViewingOption.NOTHING, appPreferences.getViewingOption())
     }
 
+    @Test
+    fun selectedShowName() {
+        val appPreferences = TestableAppPreferences()
+
+        appPreferences.setViewingOption(ViewingOption.SHOW_NAME)
+
+        assertEquals(ViewingOption.SHOW_NAME, appPreferences.getViewingOption())
+    }
+
     class TestableAppPreferences : AppPreferences(null) {
 
         override fun getPreferences(context: Context?): SharedPreferences? {
