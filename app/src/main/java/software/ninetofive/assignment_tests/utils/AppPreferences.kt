@@ -8,13 +8,13 @@ import io.reactivex.processors.FlowableProcessor
 import io.reactivex.processors.PublishProcessor
 import software.ninetofive.assignment_tests.main.ViewingOption
 import software.ninetofive.assignment_tests.main.SelectedScreen
+import java.lang.IllegalStateException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppPreferences @Inject constructor(
-    @ApplicationContext context: Context
-
+    @ApplicationContext context: Context?
 ) {
     companion object {
         private const val PREFERENCES_NAME = "app_prefs"
@@ -23,7 +23,8 @@ class AppPreferences @Inject constructor(
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
     }
 
-    private val preferences: SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, 0)
+    private val preferences: SharedPreferences = context?.getSharedPreferences(PREFERENCES_NAME, 0)
+        ?: throw IllegalStateException("Valid context is required!")
     private val viewingOptionChangedProcessor: FlowableProcessor<Any> = PublishProcessor.create()
     private val showValidDotProcessor: FlowableProcessor<Boolean> = BehaviorProcessor.create()
 
