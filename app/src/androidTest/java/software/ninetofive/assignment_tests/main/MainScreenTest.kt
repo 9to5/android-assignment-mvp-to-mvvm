@@ -1,19 +1,16 @@
 package software.ninetofive.assignment_tests.main
 
-import android.content.SharedPreferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import software.ninetofive.assignment_tests.utils.AppPreferences
 import software.ninetofive.assignment_tests.utils.InMemorySharedPreferences
-import software.ninetofive.assignment_tests.utils.SharedPreferencesModule
 
 @HiltAndroidTest
-@UninstallModules(SharedPreferencesModule::class)
 @RunWith(AndroidJUnit4::class)
 class MainScreenTest {
 
@@ -21,7 +18,7 @@ class MainScreenTest {
     val hiltRule = HiltAndroidRule(this)
 
     @BindValue
-    val sharedPreferences: SharedPreferences = InMemorySharedPreferences()
+    val appPreferences = AppPreferences(InMemorySharedPreferences())
 
     @Test
     fun defaultSelectScreenOptionValue() {
