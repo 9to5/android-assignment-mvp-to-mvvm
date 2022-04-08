@@ -95,7 +95,7 @@ class AppPreferencesTest {
 
     private class TestableAppPreferences(
         val sharedPreferences: InMemorySharedPreferences
-    ) : AppPreferences(null, sharedPreferences) {
+    ) : AppPreferences(sharedPreferences) {
 
         override fun getPreferences(context: Context?): SharedPreferences? {
             return sharedPreferences

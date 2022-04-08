@@ -2,19 +2,16 @@ package software.ninetofive.assignment_tests.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.processors.FlowableProcessor
 import io.reactivex.processors.PublishProcessor
 import software.ninetofive.assignment_tests.main.ViewingOption
 import software.ninetofive.assignment_tests.main.SelectedScreen
-import java.lang.IllegalStateException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 open class AppPreferences @Inject constructor(
-    @ApplicationContext context: Context?,
     private val sharedPreferences: SharedPreferences
 ) {
     companion object {
