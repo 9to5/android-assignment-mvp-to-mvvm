@@ -75,4 +75,15 @@ class MainScreenTest {
             checkShowValidDotOptionSelected(false)
         }
     }
+
+    @Test
+    fun showValidDotOptionInteractions() {
+        launchMainScreen {
+            checkShowValidDotOptionSelected(false)
+            tapOnShowValidDot()
+            checkShowValidDotOptionSelected(true)
+            tapOnShowValidDot()
+            checkShowValidDotOptionSelected(false)
+        }
+    }
 }
