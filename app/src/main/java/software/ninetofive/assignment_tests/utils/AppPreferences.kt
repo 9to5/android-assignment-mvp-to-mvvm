@@ -21,8 +21,6 @@ open class AppPreferences @Inject constructor(
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
     }
 
-    private val preferences: SharedPreferences = sharedPreferences
-
     protected open fun getPreferences(context: Context?) =
         context?.getSharedPreferences(PREFERENCES_NAME, 0)
 
@@ -30,13 +28,13 @@ open class AppPreferences @Inject constructor(
     private val showValidDotProcessor: FlowableProcessor<Boolean> = BehaviorProcessor.create()
 
     fun setStartScreen(selectedScreen: SelectedScreen) {
-        preferences.edit()
+        sharedPreferences.edit()
             .putString(KEY_SELECTED_SCREEN, selectedScreen.toString())
             .apply()
     }
 
     fun getStartScreen(): SelectedScreen =
-        when (preferences.getString(KEY_SELECTED_SCREEN, SelectedScreen.SCREEN_C.toString())) {
+        when (sharedPreferences.getString(KEY_SELECTED_SCREEN, SelectedScreen.SCREEN_C.toString())) {
             SelectedScreen.SCREEN_A.toString() -> SelectedScreen.SCREEN_A
             SelectedScreen.SCREEN_C.toString() -> SelectedScreen.SCREEN_C
             SelectedScreen.SCREEN_B.toString() -> SelectedScreen.SCREEN_B
@@ -44,14 +42,14 @@ open class AppPreferences @Inject constructor(
         }
 
     fun setViewingOption(viewingOption: ViewingOption) {
-        preferences.edit()
+        sharedPreferences.edit()
             .putString(KEY_VIEWING_OPTION, viewingOption.toString())
             .apply()
         viewingOptionChangedProcessor.onNext(Any())
     }
 
     fun getViewingOption(): ViewingOption =
-        when (preferences.getString(KEY_VIEWING_OPTION, ViewingOption.NOTHING.toString())) {
+        when (sharedPreferences.getString(KEY_VIEWING_OPTION, ViewingOption.NOTHING.toString())) {
             ViewingOption.SHOW_NAME.toString() -> ViewingOption.SHOW_NAME
             ViewingOption.DATE.toString() -> ViewingOption.DATE
             ViewingOption.NOTHING.toString() -> ViewingOption.NOTHING
@@ -60,12 +58,11 @@ open class AppPreferences @Inject constructor(
 
 
     fun setShowValidDot(shouldShowValidDot: Boolean) {
-        preferences.edit()
+        sharedPreferences.edit()
             .putBoolean(KEY_SHOW_VALID_DOT, shouldShowValidDot)
             .apply()
         showValidDotProcessor.onNext(shouldShowValidDot)
     }
 
-    fun shouldShowValidDot() = preferences.getBoolean(KEY_SHOW_VALID_DOT, false)
-
+    fun shouldShowValidDot() = sharedPreferences.getBoolean(KEY_SHOW_VALID_DOT, false)
 }
