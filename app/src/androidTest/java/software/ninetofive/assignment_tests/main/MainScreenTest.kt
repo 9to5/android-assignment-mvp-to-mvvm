@@ -26,8 +26,7 @@ class MainScreenTest {
     val sharedPreferences: SharedPreferences = InMemorySharedPreferences()
 
     @Test
-    fun defaultScreen() {
-
+    fun defaultSelectScreenOptionValues() {
         ActivityScenario.launch(MainActivity::class.java)
 
         onView(withText(R.string.choose_start_screen_header))
