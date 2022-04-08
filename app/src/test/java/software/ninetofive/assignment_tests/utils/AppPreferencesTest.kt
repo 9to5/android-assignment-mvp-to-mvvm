@@ -29,7 +29,7 @@ class AppPreferencesTest {
         }
 
         override fun getString(key: String?, defaultValue: String?): String? {
-            TODO("Not yet implemented")
+            return ""
         }
 
         override fun getStringSet(
