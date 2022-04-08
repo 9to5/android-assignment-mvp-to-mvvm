@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 open class AppPreferences @Inject constructor(
     @ApplicationContext context: Context?,
-    private val sharedPreferences: SharedPreferences?
+    private val sharedPreferences: SharedPreferences
 ) {
     companion object {
         private const val PREFERENCES_NAME = "app_prefs"
