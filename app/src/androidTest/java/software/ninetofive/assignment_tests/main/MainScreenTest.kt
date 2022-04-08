@@ -24,7 +24,7 @@ class MainScreenTest {
     val sharedPreferences: SharedPreferences = InMemorySharedPreferences()
 
     @Test
-    fun defaultSelectScreenOptionValues() {
+    fun defaultSelectScreenOptionValue() {
         launchMainScreen {
             checkSelectedScreenHeaderShown()
             //TODO Bug! Default preference (SCREEN_C) is recognised as B on screen
