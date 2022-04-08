@@ -11,18 +11,16 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class AppPreferences @Inject constructor(
+class AppPreferences @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
+
     companion object {
         private const val PREFERENCES_NAME = "app_prefs"
         private const val KEY_SELECTED_SCREEN = "selected_screen"
         private const val KEY_VIEWING_OPTION = "viewing_option"
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
     }
-
-    protected open fun getPreferences(context: Context?) =
-        context?.getSharedPreferences(PREFERENCES_NAME, 0)
 
     private val viewingOptionChangedProcessor: FlowableProcessor<Any> = PublishProcessor.create()
     private val showValidDotProcessor: FlowableProcessor<Boolean> = BehaviorProcessor.create()

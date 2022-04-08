@@ -93,15 +93,6 @@ class AppPreferencesTest {
         assertEquals(true, appPreferences.shouldShowValidDot())
     }
 
-    private class TestableAppPreferences(
-        val sharedPreferences: InMemorySharedPreferences
-    ) : AppPreferences(sharedPreferences) {
-
-        override fun getPreferences(context: Context?): SharedPreferences? {
-            return sharedPreferences
-        }
-    }
-
     private class InMemorySharedPreferences : SharedPreferences {
 
         private val valuesMap = HashMap<String, Any?>()
