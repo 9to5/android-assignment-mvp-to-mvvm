@@ -24,8 +24,7 @@ open class AppPreferences @Inject constructor(
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
     }
 
-    private val preferences: SharedPreferences = sharedPreferences ?: getPreferences(context)
-        ?: throw IllegalStateException("Valid context is required!")
+    private val preferences: SharedPreferences = sharedPreferences
 
     protected open fun getPreferences(context: Context?) =
         context?.getSharedPreferences(PREFERENCES_NAME, 0)
