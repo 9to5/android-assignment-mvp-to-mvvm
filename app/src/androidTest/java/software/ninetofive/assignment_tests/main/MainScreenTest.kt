@@ -39,4 +39,11 @@ class MainScreenTest {
             checkSelectedViewingOptionIs(ViewingOption.NOTHING)
         }
     }
+
+    @Test
+    fun defaultShowValidDotValue() {
+        launchMainScreen {
+            checkShowValidDotOptionSelected(false)
+        }
+    }
 }

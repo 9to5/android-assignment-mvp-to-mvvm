@@ -44,4 +44,9 @@ class MainScreenRobot {
         onView(withId(R.id.radio_show_date)).check(matches(showDateSelected))
         onView(withId(R.id.radio_show_nothing)).check(matches(showNothingSelected))
     }
+
+    fun checkShowValidDotOptionSelected(isSelected: Boolean) {
+        val selected = if (isSelected) isChecked() else isNotChecked()
+        onView(withId(R.id.valid_dot_switch)).check(matches(selected))
+    }
 }
