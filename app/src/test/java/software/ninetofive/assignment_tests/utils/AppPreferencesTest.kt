@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import software.ninetofive.assignment_tests.main.SelectedScreen
+import software.ninetofive.assignment_tests.main.ViewingOption
 
 class AppPreferencesTest {
 
@@ -40,6 +41,13 @@ class AppPreferencesTest {
         appPreferences.setStartScreen(SelectedScreen.SCREEN_C)
 
         assertEquals(SelectedScreen.SCREEN_C, appPreferences.getStartScreen())
+    }
+
+    @Test
+    fun defaultViewingOption() {
+        val appPreferences = TestableAppPreferences()
+
+        assertEquals(ViewingOption.NOTHING, appPreferences.getViewingOption())
     }
 
     class TestableAppPreferences : AppPreferences(null) {
