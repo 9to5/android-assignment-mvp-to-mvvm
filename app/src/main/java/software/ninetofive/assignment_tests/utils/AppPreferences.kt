@@ -23,8 +23,12 @@ class AppPreferences @Inject constructor(
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
     }
 
-    private val preferences: SharedPreferences = context?.getSharedPreferences(PREFERENCES_NAME, 0)
+    private val preferences: SharedPreferences = getPreferences(context)
         ?: throw IllegalStateException("Valid context is required!")
+
+    private fun getPreferences(context: Context?) =
+        context?.getSharedPreferences(PREFERENCES_NAME, 0)
+
     private val viewingOptionChangedProcessor: FlowableProcessor<Any> = PublishProcessor.create()
     private val showValidDotProcessor: FlowableProcessor<Boolean> = BehaviorProcessor.create()
 
