@@ -33,12 +33,15 @@ class AppPreferencesTest {
 
     private class InMemorySharedPreferences : SharedPreferences {
 
+        private var selectedScreen: String? = ""
+        private val editor = Editor()
+
         override fun getAll(): MutableMap<String, *> {
             TODO("Not yet implemented")
         }
 
         override fun getString(key: String?, defaultValue: String?): String? {
-            return ""
+            return selectedScreen
         }
 
         override fun getStringSet(
@@ -68,9 +71,7 @@ class AppPreferencesTest {
             TODO("Not yet implemented")
         }
 
-        override fun edit(): SharedPreferences.Editor {
-            TODO("Not yet implemented")
-        }
+        override fun edit(): SharedPreferences.Editor = editor
 
         override fun registerOnSharedPreferenceChangeListener(
             listener: SharedPreferences.OnSharedPreferenceChangeListener?
@@ -82,6 +83,53 @@ class AppPreferencesTest {
             listener: SharedPreferences.OnSharedPreferenceChangeListener?
         ) {
             TODO("Not yet implemented")
+        }
+
+        inner class Editor: SharedPreferences.Editor {
+
+            override fun putString(key: String?, value: String?): SharedPreferences.Editor {
+                selectedScreen = value
+                return this
+            }
+
+            override fun putStringSet(
+                key: String?,
+                value: MutableSet<String>?
+            ): SharedPreferences.Editor {
+                TODO("Not yet implemented")
+            }
+
+            override fun putInt(key: String?, value: Int): SharedPreferences.Editor {
+                TODO("Not yet implemented")
+            }
+
+            override fun putLong(key: String?, value: Long): SharedPreferences.Editor {
+                TODO("Not yet implemented")
+            }
+
+            override fun putFloat(key: String?, value: Float): SharedPreferences.Editor {
+                TODO("Not yet implemented")
+            }
+
+            override fun putBoolean(key: String?, value: Boolean): SharedPreferences.Editor {
+                TODO("Not yet implemented")
+            }
+
+            override fun remove(key: String?): SharedPreferences.Editor {
+                TODO("Not yet implemented")
+            }
+
+            override fun clear(): SharedPreferences.Editor {
+                TODO("Not yet implemented")
+            }
+
+            override fun commit(): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun apply() {
+
+            }
         }
     }
 }
