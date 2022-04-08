@@ -1,12 +1,11 @@
 package software.ninetofive.assignment_tests.utils
 
-import android.content.Context
 import android.content.SharedPreferences
 import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.processors.FlowableProcessor
 import io.reactivex.processors.PublishProcessor
-import software.ninetofive.assignment_tests.main.ViewingOption
 import software.ninetofive.assignment_tests.main.SelectedScreen
+import software.ninetofive.assignment_tests.main.ViewingOption
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +15,6 @@ class AppPreferences @Inject constructor(
 ) {
 
     companion object {
-        private const val PREFERENCES_NAME = "app_prefs"
         private const val KEY_SELECTED_SCREEN = "selected_screen"
         private const val KEY_VIEWING_OPTION = "viewing_option"
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
