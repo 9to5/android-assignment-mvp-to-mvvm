@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppPreferences @Inject constructor(
+open class AppPreferences @Inject constructor(
     @ApplicationContext context: Context?
 ) {
     companion object {
@@ -26,7 +26,7 @@ class AppPreferences @Inject constructor(
     private val preferences: SharedPreferences = getPreferences(context)
         ?: throw IllegalStateException("Valid context is required!")
 
-    private fun getPreferences(context: Context?) =
+    protected open fun getPreferences(context: Context?) =
         context?.getSharedPreferences(PREFERENCES_NAME, 0)
 
     private val viewingOptionChangedProcessor: FlowableProcessor<Any> = PublishProcessor.create()
