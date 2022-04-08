@@ -9,7 +9,7 @@ import software.ninetofive.assignment_tests.main.SelectedScreen
 class AppPreferencesTest {
 
     @Test
-    fun instantiate() {
+    fun defaultSelectedScreen() {
         val appPreferences = TestableAppPreferences()
 
         assertEquals(SelectedScreen.SCREEN_C, appPreferences.getStartScreen())
