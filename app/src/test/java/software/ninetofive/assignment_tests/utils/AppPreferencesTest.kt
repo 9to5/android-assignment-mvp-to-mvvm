@@ -84,6 +84,15 @@ class AppPreferencesTest {
         assertEquals(false, appPreferences.shouldShowValidDot())
     }
 
+    @Test
+    fun toggleShowValidDot() {
+        val appPreferences = TestableAppPreferences()
+
+        appPreferences.setShowValidDot(true)
+
+        assertEquals(true, appPreferences.shouldShowValidDot())
+    }
+
     class TestableAppPreferences : AppPreferences(null) {
 
         override fun getPreferences(context: Context?): SharedPreferences? {
@@ -175,8 +184,9 @@ class AppPreferencesTest {
                 TODO("Not yet implemented")
             }
 
-            override fun putBoolean(key: String?, value: Boolean): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+            override fun putBoolean(key: String, value: Boolean): SharedPreferences.Editor {
+                uncommittedValuesMap[key] = value
+                return this
             }
 
             override fun remove(key: String): SharedPreferences.Editor {
