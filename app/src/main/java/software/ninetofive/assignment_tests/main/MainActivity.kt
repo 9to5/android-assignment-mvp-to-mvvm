@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         valid_dot_switch.setOnCheckedChangeListener { buttonView, isChecked -> presenter.setValidDotVisibility(isChecked) }
 
         compositeDisposable.addAll(
-            presenter.dispose(),
             presenter.onScreenSelectedFlowable
                 .subscribe(::onScreenSelected),
             presenter.viewingOptionFlowable

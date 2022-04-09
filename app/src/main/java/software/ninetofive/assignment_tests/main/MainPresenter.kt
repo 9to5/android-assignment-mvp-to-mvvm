@@ -1,7 +1,6 @@
 package software.ninetofive.assignment_tests.main
 
 import io.reactivex.Flowable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.processors.FlowableProcessor
 import io.reactivex.processors.PublishProcessor
 import software.ninetofive.assignment_tests.utils.AppPreferences
@@ -17,10 +16,6 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
 
     val viewingOptionFlowable: Flowable<ViewingOption> = viewingOptionsSubject
         .startWith(appPreferences.getViewingOption())
-
-    val dispose = {
-        CompositeDisposable()
-    }
 
     fun selectScreen(selectedScreen: SelectedScreen) {
         selectScreenSubject.onNext(selectedScreen)

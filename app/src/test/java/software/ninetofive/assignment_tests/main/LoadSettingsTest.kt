@@ -1,9 +1,6 @@
 package software.ninetofive.assignment_tests.main
 
-import io.reactivex.disposables.CompositeDisposable
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import software.ninetofive.assignment_tests.main.SelectedScreen.*
 import software.ninetofive.assignment_tests.main.ViewingOption.*
@@ -14,12 +11,6 @@ class LoadSettingsTest {
 
     private val appPreferences = AppPreferences(InMemorySharedPreferences())
     private val presenter = MainPresenter(appPreferences)
-    private val disposable = CompositeDisposable()
-
-    @BeforeEach
-    fun setUp() {
-        disposable.add(presenter.dispose())
-    }
 
     @Test
     fun defaultSelectedScreen() {
@@ -79,10 +70,5 @@ class LoadSettingsTest {
         presenter.setValidDotVisibility(true)
         assertTrue(presenter.isValidDotChecked())
         assertEquals(true, appPreferences.shouldShowValidDot())
-    }
-
-    @AfterEach
-    fun tearDown() {
-        disposable.dispose()
     }
 }
