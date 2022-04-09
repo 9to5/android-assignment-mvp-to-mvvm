@@ -41,8 +41,6 @@ class MainViewModel @Inject constructor(
         mutableScreenState.update { it.copy(viewingOption = viewingOption) }
     }
 
-    fun isValidDotChecked(): Boolean = appPreferences.shouldShowValidDot()
-
     fun setValidDotVisibility(isActive: Boolean) {
         appPreferences.setShowValidDot(isActive)
         mutableScreenState.update { it.copy(isValidDotChecked = isActive) }
