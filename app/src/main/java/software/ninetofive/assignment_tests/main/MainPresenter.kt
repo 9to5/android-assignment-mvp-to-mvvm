@@ -13,6 +13,8 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
     private val mutableSelectedScreenLiveData = MutableLiveData(appPreferences.getStartScreen())
     val selectedScreenLiveData: LiveData<SelectedScreen> = mutableSelectedScreenLiveData
 
+    private val mutableViewingOptionLiveData = MutableLiveData(appPreferences.getViewingOption())
+    val viewingOptionLiveData: LiveData<ViewingOption> = mutableViewingOptionLiveData
     private val viewingOptionsSubject: FlowableProcessor<ViewingOption> = PublishProcessor.create()
 
     val viewingOptionFlowable: Flowable<ViewingOption> = viewingOptionsSubject

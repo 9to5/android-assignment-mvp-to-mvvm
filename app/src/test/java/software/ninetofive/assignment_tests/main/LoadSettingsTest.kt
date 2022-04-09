@@ -43,6 +43,7 @@ class LoadSettingsTest {
         val subscriber = presenter.viewingOptionFlowable.test()
 
         assertEquals(NOTHING, subscriber.values().last())
+        assertEquals(NOTHING, presenter.viewingOptionLiveData.value)
     }
 
     @Test
