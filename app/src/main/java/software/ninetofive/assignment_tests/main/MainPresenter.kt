@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class MainPresenter @Inject constructor(private val appPreferences: AppPreferences) {
 
-    private val mutableSelectedScreenLiveData = MutableLiveData(SelectedScreen.SCREEN_C)
+    private val mutableSelectedScreenLiveData = MutableLiveData(appPreferences.getStartScreen())
     val selectedScreenLiveData: LiveData<SelectedScreen> = mutableSelectedScreenLiveData
 
     private val selectScreenSubject: FlowableProcessor<SelectedScreen> = PublishProcessor.create()
