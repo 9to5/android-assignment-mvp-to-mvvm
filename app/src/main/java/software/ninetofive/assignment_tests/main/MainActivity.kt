@@ -5,19 +5,18 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_choose_start_screen.*
-import kotlinx.android.synthetic.main.choose_start_screen.*
-import kotlinx.android.synthetic.main.choose_viewing_options.*
 import software.ninetofive.assignment_tests.R
+import software.ninetofive.assignment_tests.databinding.ActivityChooseStartScreenBinding
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
+    private val binding by lazy { ActivityChooseStartScreenBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose_start_screen)
+        setContentView(binding.root)
         setupUI()
         setupLiveDataObserver()
         viewModel.loadSettings()
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(location_choose_start_screen)
+        setSupportActionBar(binding.locationChooseStartScreen)
         supportActionBar?.apply {
             setTitle(R.string.choose_start_screen_title)
         }
@@ -40,17 +39,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun forceRadioButtonsToCorrectPosition() {
         arrayOf(
-            radio_screen_a,
-            radio_screen_b,
-            radio_screen_c,
-            radio_show_name,
-            radio_show_date,
-            radio_show_nothing
+            binding.chooseStartScreen.radioScreenA,
+            binding.chooseStartScreen.radioScreenB,
+            binding.chooseStartScreen.radioScreenC,
+            binding.chooseViewingOptions.radioShowName,
+            binding.chooseViewingOptions.radioShowDate,
+            binding.chooseViewingOptions.radioShowNothing
         ).forEach { ViewCompat.setLayoutDirection(it, ViewCompat.LAYOUT_DIRECTION_RTL) }
     }
 
     private fun setupSelectStartScreenOptions() {
-        radio_group_select_screen.setOnCheckedChangeListener { _, id ->
+        binding.chooseStartScreen.radioGroupSelectScreen.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.radio_screen_a -> SelectedScreen.SCREEN_A
                 R.id.radio_screen_b -> SelectedScreen.SCREEN_C
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewingOptions() {
-        radio_group_viewing_options.setOnCheckedChangeListener { _, id ->
+        binding.chooseViewingOptions.radioGroupViewingOptions.setOnCheckedChangeListener { _, id ->
             when (id) {
                 R.id.radio_show_name -> ViewingOption.SHOW_NAME
                 R.id.radio_show_date -> ViewingOption.DATE
@@ -70,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupValidDotSwitch() {
-        valid_dot_switch.setOnCheckedChangeListener { _, isChecked ->
+        binding.validDotSwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setValidDotVisibility(isChecked)
         }
     }
@@ -84,18 +83,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onScreenSelected(selectedScreen: SelectedScreen) = when (selectedScreen) {
-        SelectedScreen.SCREEN_A -> radio_screen_a.isChecked = true
-        SelectedScreen.SCREEN_C -> radio_screen_b.isChecked = true
-        SelectedScreen.SCREEN_B -> radio_screen_c.isChecked = true
+        SelectedScreen.SCREEN_A -> binding.chooseStartScreen.radioScreenA.isChecked = true
+        SelectedScreen.SCREEN_C -> binding.chooseStartScreen.radioScreenB.isChecked = true
+        SelectedScreen.SCREEN_B -> binding.chooseStartScreen.radioScreenC.isChecked = true
     }
 
     private fun onViewingOptionSelected(viewingOption: ViewingOption) = when (viewingOption) {
-        ViewingOption.SHOW_NAME -> radio_show_name.isChecked = true
-        ViewingOption.DATE -> radio_show_date.isChecked = true
-        ViewingOption.NOTHING -> radio_show_nothing.isChecked = true
+        ViewingOption.SHOW_NAME -> binding.chooseViewingOptions.radioShowName.isChecked = true
+        ViewingOption.DATE -> binding.chooseViewingOptions.radioShowDate.isChecked = true
+        ViewingOption.NOTHING -> binding.chooseViewingOptions.radioShowNothing.isChecked = true
     }
 
     private fun onValidDotToggled(validDotChecked: Boolean) {
-        valid_dot_switch.isChecked = validDotChecked
+        binding.validDotSwitch.isChecked = validDotChecked
     }
 }
