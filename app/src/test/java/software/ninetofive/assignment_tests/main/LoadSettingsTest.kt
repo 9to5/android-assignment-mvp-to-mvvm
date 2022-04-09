@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import software.ninetofive.assignment_tests.InstantTaskExecutorExtension
 import software.ninetofive.assignment_tests.main.SelectedScreen.*
 import software.ninetofive.assignment_tests.main.ViewingOption.*
+import software.ninetofive.assignment_tests.main.state.ScreenState
 import software.ninetofive.assignment_tests.utils.AppPreferences
 import software.ninetofive.assignment_tests.utils.InMemorySharedPreferences
 
@@ -18,6 +19,7 @@ class LoadSettingsTest {
     @Test
     fun defaultSelectedScreen() {
         assertEquals(SCREEN_C, viewModel.selectedScreenLiveData.value)
+        assertEquals(ScreenState(selectedScreen = SCREEN_C), viewModel.screenState.value)
     }
 
     @Test
