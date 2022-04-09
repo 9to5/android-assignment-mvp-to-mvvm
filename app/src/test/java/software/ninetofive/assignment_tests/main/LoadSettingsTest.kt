@@ -97,4 +97,20 @@ class LoadSettingsTest {
         assertEquals(true, appPreferences.shouldShowValidDot())
         assertEquals(ScreenState(isValidDotChecked = true), viewModel.screenState.value)
     }
+
+    @Test
+    fun initialSettingsLoad() {
+        appPreferences.run {
+            setStartScreen(SCREEN_B)
+            setViewingOption(DATE)
+            setShowValidDot(true)
+        }
+
+        viewModel.loadSettings()
+
+        assertEquals(
+            ScreenState(selectedScreen = SCREEN_B, viewingOption = DATE, isValidDotChecked = true),
+            viewModel.screenState.value
+        )
+    }
 }

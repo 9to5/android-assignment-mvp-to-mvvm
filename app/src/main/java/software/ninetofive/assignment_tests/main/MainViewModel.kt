@@ -22,6 +22,13 @@ class MainViewModel @Inject constructor(
     private val mutableViewingOptionLiveData = MutableLiveData(appPreferences.getViewingOption())
     val viewingOptionLiveData: LiveData<ViewingOption> = mutableViewingOptionLiveData
 
+    fun loadSettings() {
+        val selectedScreen = appPreferences.getStartScreen()
+        val viewingOption = appPreferences.getViewingOption()
+        val validDotVisible = appPreferences.shouldShowValidDot()
+        mutableScreenState.update { ScreenState(selectedScreen, viewingOption, validDotVisible) }
+    }
+
     fun selectScreen(selectedScreen: SelectedScreen) {
         appPreferences.setStartScreen(selectedScreen)
         mutableSelectedScreenLiveData.value = selectedScreen
