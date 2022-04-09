@@ -40,9 +40,6 @@ class LoadSettingsTest {
 
     @Test
     fun defaultViewingOption() {
-        val subscriber = presenter.viewingOptionFlowable.test()
-
-        assertEquals(NOTHING, subscriber.values().last())
         assertEquals(NOTHING, presenter.viewingOptionLiveData.value)
     }
 
@@ -50,12 +47,10 @@ class LoadSettingsTest {
     fun selectedViewSelection() {
         val viewingOptionObservedValues = mutableListOf<ViewingOption>()
         presenter.viewingOptionLiveData.observeForever { viewingOptionObservedValues.add(it) }
-        val subscriber = presenter.viewingOptionFlowable.test()
 
         presenter.selectViewingOption(SHOW_NAME)
         presenter.selectViewingOption(DATE)
 
-        assertEquals(listOf(NOTHING, SHOW_NAME, DATE), subscriber.values())
         assertEquals(listOf(NOTHING, SHOW_NAME, DATE), viewingOptionObservedValues)
     }
 
