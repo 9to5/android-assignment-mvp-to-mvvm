@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import software.ninetofive.assignment_tests.main.SelectedScreen.*
+import software.ninetofive.assignment_tests.main.ViewingOption.*
 import software.ninetofive.assignment_tests.utils.AppPreferences
 import software.ninetofive.assignment_tests.utils.InMemorySharedPreferences
 
@@ -48,20 +49,17 @@ class LoadSettingsTest {
     fun defaultViewingOption() {
         val subscriber = presenter.viewingOptionFlowable.test()
 
-        assertEquals(ViewingOption.NOTHING, subscriber.values().last())
+        assertEquals(NOTHING, subscriber.values().last())
     }
 
     @Test
     fun selectedViewSelection() {
         val subscriber = presenter.viewingOptionFlowable.test()
 
-        presenter.selectViewingOption(ViewingOption.SHOW_NAME)
-        presenter.selectViewingOption(ViewingOption.DATE)
+        presenter.selectViewingOption(SHOW_NAME)
+        presenter.selectViewingOption(DATE)
 
-        assertEquals(
-            listOf(ViewingOption.NOTHING, ViewingOption.SHOW_NAME, ViewingOption.DATE),
-            subscriber.values()
-        )
+        assertEquals(listOf(NOTHING, SHOW_NAME, DATE), subscriber.values())
     }
 
     @AfterEach
