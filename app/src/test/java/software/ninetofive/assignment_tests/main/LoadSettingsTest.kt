@@ -62,6 +62,13 @@ class LoadSettingsTest {
         assertEquals(listOf(NOTHING, SHOW_NAME, DATE), subscriber.values())
     }
 
+    @Test
+    fun storingViewingOptionSelection() {
+        presenter.selectViewingOption(SHOW_NAME)
+
+        assertEquals(SHOW_NAME, appPreferences.getViewingOption())
+    }
+
     @AfterEach
     fun tearDown() {
         disposable.dispose()
