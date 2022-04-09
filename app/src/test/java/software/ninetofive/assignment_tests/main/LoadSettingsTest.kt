@@ -17,6 +17,7 @@ class LoadSettingsTest {
         val subscriber = presenter.onScreenSelectedFlowable.test()
 
         assertEquals(SCREEN_C, subscriber.values().last())
+        assertEquals(SCREEN_C, presenter.selectedScreenLiveData.value)
     }
 
     @Test
