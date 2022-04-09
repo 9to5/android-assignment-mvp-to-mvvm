@@ -53,17 +53,28 @@ class LoadSettingsTest {
     @Test
     fun defaultViewingOption() {
         assertEquals(NOTHING, viewModel.viewingOptionLiveData.value)
+        assertEquals(ScreenState(viewingOption = NOTHING), viewModel.screenState.value)
     }
 
     @Test
     fun selectedViewSelection() {
+        val observedValues = mutableListOf<ScreenState>()
         val viewingOptionObservedValues = mutableListOf<ViewingOption>()
         viewModel.viewingOptionLiveData.observeForever { viewingOptionObservedValues.add(it) }
+        viewModel.screenState.observeForever { observedValues.add(it) }
 
         viewModel.selectViewingOption(SHOW_NAME)
         viewModel.selectViewingOption(DATE)
 
         assertEquals(listOf(NOTHING, SHOW_NAME, DATE), viewingOptionObservedValues)
+        assertEquals(
+            listOf(
+                ScreenState(viewingOption = NOTHING),
+                ScreenState(viewingOption = SHOW_NAME),
+                ScreenState(viewingOption = DATE)
+            ),
+            observedValues
+        )
     }
 
     @Test

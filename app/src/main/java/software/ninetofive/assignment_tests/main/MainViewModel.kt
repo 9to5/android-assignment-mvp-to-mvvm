@@ -31,6 +31,7 @@ class MainViewModel @Inject constructor(
     fun selectViewingOption(viewingOption: ViewingOption) {
         appPreferences.setViewingOption(viewingOption)
         mutableViewingOptionLiveData.value = viewingOption
+        mutableScreenState.update { it.copy(viewingOption = viewingOption) }
     }
 
     fun isValidDotChecked(): Boolean = appPreferences.shouldShowValidDot()
