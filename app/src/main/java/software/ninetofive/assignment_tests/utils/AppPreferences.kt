@@ -1,9 +1,6 @@
 package software.ninetofive.assignment_tests.utils
 
 import android.content.SharedPreferences
-import io.reactivex.processors.BehaviorProcessor
-import io.reactivex.processors.FlowableProcessor
-import io.reactivex.processors.PublishProcessor
 import software.ninetofive.assignment_tests.main.SelectedScreen
 import software.ninetofive.assignment_tests.main.ViewingOption
 import javax.inject.Inject
@@ -19,9 +16,6 @@ class AppPreferences @Inject constructor(
         private const val KEY_VIEWING_OPTION = "viewing_option"
         private const val KEY_SHOW_VALID_DOT = "show_valid_dot"
     }
-
-    private val viewingOptionChangedProcessor: FlowableProcessor<Any> = PublishProcessor.create()
-    private val showValidDotProcessor: FlowableProcessor<Boolean> = BehaviorProcessor.create()
 
     fun setStartScreen(selectedScreen: SelectedScreen) {
         sharedPreferences.edit()
@@ -41,7 +35,6 @@ class AppPreferences @Inject constructor(
         sharedPreferences.edit()
             .putString(KEY_VIEWING_OPTION, viewingOption.toString())
             .apply()
-        viewingOptionChangedProcessor.onNext(Any())
     }
 
     fun getViewingOption(): ViewingOption =
@@ -52,12 +45,10 @@ class AppPreferences @Inject constructor(
             else -> ViewingOption.NOTHING
         }
 
-
     fun setShowValidDot(shouldShowValidDot: Boolean) {
         sharedPreferences.edit()
             .putBoolean(KEY_SHOW_VALID_DOT, shouldShowValidDot)
             .apply()
-        showValidDotProcessor.onNext(shouldShowValidDot)
     }
 
     fun shouldShowValidDot() = sharedPreferences.getBoolean(KEY_SHOW_VALID_DOT, false)
