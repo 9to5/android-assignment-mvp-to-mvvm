@@ -20,14 +20,15 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
 
     val dispose = {
         CompositeDisposable(
-            selectScreenSubject
-                .subscribe { appPreferences.setStartScreen(it) },
             viewingOptionsSubject
                 .subscribe { appPreferences.setViewingOption(it) }
         )
     }
 
-    fun selectScreen(selectedScreen: SelectedScreen) = selectScreenSubject.onNext(selectedScreen)
+    fun selectScreen(selectedScreen: SelectedScreen) {
+        selectScreenSubject.onNext(selectedScreen)
+        appPreferences.setStartScreen(selectedScreen)
+    }
     fun selectViewingOption(viewingOption: ViewingOption) = viewingOptionsSubject.onNext(viewingOption)
 
     fun isValidDotChecked(): Boolean = appPreferences.shouldShowValidDot()
