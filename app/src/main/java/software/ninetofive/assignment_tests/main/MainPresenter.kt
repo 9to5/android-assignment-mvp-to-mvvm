@@ -33,28 +33,3 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
     fun isValidDotChecked(): Boolean = appPreferences.shouldShowValidDot()
     fun setValidDotVisibility(isActive: Boolean) = appPreferences.setShowValidDot(isActive)
 }
-
-enum class SelectedScreen {
-    SCREEN_A {
-        override fun toString() = "SCREEN_A"
-    },
-    SCREEN_B {
-        override fun toString() = "SCREEN_B"
-    },
-    SCREEN_C {
-        override fun toString() = "SCREEN_C"
-    }
-}
-
-enum class ViewingOption {
-    SHOW_NAME {
-        override fun toString() = "SHOW_NAME"
-    },
-    DATE {
-        override fun toString() = "DATE"
-    },
-    NOTHING {
-        override fun toString() = "NOTHING"
-    }
-}
-
