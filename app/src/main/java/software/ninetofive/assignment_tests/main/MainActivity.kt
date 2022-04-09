@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_choose_start_screen.*
-import kotlinx.android.synthetic.main.choose_viewing_options.*
 import kotlinx.android.synthetic.main.choose_start_screen.*
+import kotlinx.android.synthetic.main.choose_viewing_options.*
 import software.ninetofive.assignment_tests.R
 import javax.inject.Inject
 
@@ -19,25 +19,34 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_start_screen)
-        setupToolbar()
-        setupSelectStartScreenOptions()
-        setupViewingOptions()
+        setupUI()
         setupLiveDataObservers()
-        // Little hack to force radio buttons on the right. After enabled RTL everything is still ok.
-        arrayOf(radio_screen_a, radio_screen_b, radio_screen_c, radio_show_name, radio_show_date, radio_show_nothing)
-            .forEach { ViewCompat.setLayoutDirection(it, ViewCompat.LAYOUT_DIRECTION_RTL) }
-
-        valid_dot_switch.isChecked = presenter.isValidDotChecked()
-        valid_dot_switch.setOnCheckedChangeListener { buttonView, isChecked -> presenter.setValidDotVisibility(isChecked) }
     }
 
-    private fun setupLiveDataObservers() {
-        presenter.selectedScreenLiveData.observe(this) {
-            onScreenSelected(it)
+    private fun setupUI() {
+        setupToolbar()
+        forceRadioButtonsToCorrectPosition()
+        setupSelectStartScreenOptions()
+        setupViewingOptions()
+        setupValidDotSwitch()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(location_choose_start_screen)
+        supportActionBar?.apply {
+            setTitle(R.string.choose_start_screen_title)
         }
-        presenter.viewingOptionLiveData.observe(this) {
-            onViewingOptionSelected(it)
-        }
+    }
+
+    private fun forceRadioButtonsToCorrectPosition() {
+        arrayOf(
+            radio_screen_a,
+            radio_screen_b,
+            radio_screen_c,
+            radio_show_name,
+            radio_show_date,
+            radio_show_nothing
+        ).forEach { ViewCompat.setLayoutDirection(it, ViewCompat.LAYOUT_DIRECTION_RTL) }
     }
 
     private fun setupSelectStartScreenOptions() {
@@ -60,6 +69,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupValidDotSwitch() {
+        valid_dot_switch.isChecked = presenter.isValidDotChecked()
+        valid_dot_switch.setOnCheckedChangeListener { _, isChecked ->
+            presenter.setValidDotVisibility(isChecked)
+        }
+    }
+
+    private fun setupLiveDataObservers() {
+        presenter.selectedScreenLiveData.observe(this) {
+            onScreenSelected(it)
+        }
+        presenter.viewingOptionLiveData.observe(this) {
+            onViewingOptionSelected(it)
+        }
+    }
+
     private fun onScreenSelected(selectedScreen: SelectedScreen) = when (selectedScreen) {
         SelectedScreen.SCREEN_A -> radio_screen_a.isChecked = true
         SelectedScreen.SCREEN_C -> radio_screen_b.isChecked = true
@@ -70,12 +95,5 @@ class MainActivity : AppCompatActivity() {
         ViewingOption.SHOW_NAME -> radio_show_name.isChecked = true
         ViewingOption.DATE -> radio_show_date.isChecked = true
         ViewingOption.NOTHING -> radio_show_nothing.isChecked = true
-    }
-
-    private fun setupToolbar() {
-        setSupportActionBar(location_choose_start_screen)
-        supportActionBar?.apply {
-            setTitle(R.string.choose_start_screen_title)
-        }
     }
 }
