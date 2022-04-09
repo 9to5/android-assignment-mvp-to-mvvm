@@ -2,10 +2,15 @@ package software.ninetofive.assignment_tests.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import software.ninetofive.assignment_tests.utils.AppPreferences
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val appPreferences: AppPreferences) {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val appPreferences: AppPreferences
+) : ViewModel() {
 
     private val mutableSelectedScreenLiveData = MutableLiveData(appPreferences.getStartScreen())
     val selectedScreenLiveData: LiveData<SelectedScreen> = mutableSelectedScreenLiveData

@@ -1,6 +1,7 @@
 package software.ninetofive.assignment_tests.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import dagger.hilt.android.AndroidEntryPoint
@@ -8,13 +9,11 @@ import kotlinx.android.synthetic.main.activity_choose_start_screen.*
 import kotlinx.android.synthetic.main.choose_start_screen.*
 import kotlinx.android.synthetic.main.choose_viewing_options.*
 import software.ninetofive.assignment_tests.R
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModel: MainViewModel
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
