@@ -87,6 +87,7 @@ class LoadSettingsTest {
     @Test
     fun defaultValidDotCheckedOption() {
         assertFalse(viewModel.isValidDotChecked())
+        assertEquals(ScreenState(isValidDotChecked = false), viewModel.screenState.value)
     }
 
     @Test
@@ -94,5 +95,6 @@ class LoadSettingsTest {
         viewModel.setValidDotVisibility(true)
         assertTrue(viewModel.isValidDotChecked())
         assertEquals(true, appPreferences.shouldShowValidDot())
+        assertEquals(ScreenState(isValidDotChecked = true), viewModel.screenState.value)
     }
 }

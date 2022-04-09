@@ -35,7 +35,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun isValidDotChecked(): Boolean = appPreferences.shouldShowValidDot()
-    fun setValidDotVisibility(isActive: Boolean) = appPreferences.setShowValidDot(isActive)
+
+    fun setValidDotVisibility(isActive: Boolean) {
+        appPreferences.setShowValidDot(isActive)
+        mutableScreenState.update { it.copy(isValidDotChecked = isActive) }
+    }
 
     private fun <T> MutableLiveData<T>.update(block: (T) -> T) {
         val current = value
