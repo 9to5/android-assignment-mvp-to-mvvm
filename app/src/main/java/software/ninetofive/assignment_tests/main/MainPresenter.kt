@@ -13,17 +13,12 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
     private val mutableSelectedScreenLiveData = MutableLiveData(appPreferences.getStartScreen())
     val selectedScreenLiveData: LiveData<SelectedScreen> = mutableSelectedScreenLiveData
 
-    private val selectScreenSubject: FlowableProcessor<SelectedScreen> = PublishProcessor.create()
     private val viewingOptionsSubject: FlowableProcessor<ViewingOption> = PublishProcessor.create()
-
-    val onScreenSelectedFlowable: Flowable<SelectedScreen> = selectScreenSubject
-        .startWith(appPreferences.getStartScreen())
 
     val viewingOptionFlowable: Flowable<ViewingOption> = viewingOptionsSubject
         .startWith(appPreferences.getViewingOption())
 
     fun selectScreen(selectedScreen: SelectedScreen) {
-        selectScreenSubject.onNext(selectedScreen)
         appPreferences.setStartScreen(selectedScreen)
         mutableSelectedScreenLiveData.value = selectedScreen
     }
