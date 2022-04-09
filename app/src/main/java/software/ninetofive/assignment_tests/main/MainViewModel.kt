@@ -25,6 +25,7 @@ class MainViewModel @Inject constructor(
     fun selectScreen(selectedScreen: SelectedScreen) {
         appPreferences.setStartScreen(selectedScreen)
         mutableSelectedScreenLiveData.value = selectedScreen
+        mutableScreenState.update { it.copy(selectedScreen = selectedScreen) }
     }
 
     fun selectViewingOption(viewingOption: ViewingOption) {
@@ -34,4 +35,10 @@ class MainViewModel @Inject constructor(
 
     fun isValidDotChecked(): Boolean = appPreferences.shouldShowValidDot()
     fun setValidDotVisibility(isActive: Boolean) = appPreferences.setShowValidDot(isActive)
+
+    private fun <T> MutableLiveData<T>.update(block: (T) -> T) {
+        val current = value
+        val updated = current?.let { block(current) }
+        value = updated
+    }
 }

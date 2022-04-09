@@ -25,12 +25,22 @@ class LoadSettingsTest {
     @Test
     fun selectedScreenSelection() {
         val selectedScreenObservedValues = mutableListOf<SelectedScreen>()
+        val observedStateValues = mutableListOf<ScreenState>()
         viewModel.selectedScreenLiveData.observeForever { selectedScreenObservedValues.add(it) }
+        viewModel.screenState.observeForever { observedStateValues.add(it) }
 
         viewModel.selectScreen(SCREEN_B)
         viewModel.selectScreen(SCREEN_A)
 
         assertEquals(listOf(SCREEN_C, SCREEN_B, SCREEN_A), selectedScreenObservedValues)
+        assertEquals(
+            listOf(
+                ScreenState(selectedScreen = SCREEN_C),
+                ScreenState(selectedScreen = SCREEN_B),
+                ScreenState(selectedScreen = SCREEN_A)
+            ),
+            observedStateValues
+        )
     }
 
     @Test
