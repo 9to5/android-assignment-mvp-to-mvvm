@@ -51,6 +51,19 @@ class LoadSettingsTest {
         assertEquals(ViewingOption.NOTHING, subscriber.values().last())
     }
 
+    @Test
+    fun selectedViewSelection() {
+        val subscriber = presenter.viewingOptionFlowable.test()
+
+        presenter.selectViewingOption(ViewingOption.SHOW_NAME)
+        presenter.selectViewingOption(ViewingOption.DATE)
+
+        assertEquals(
+            listOf(ViewingOption.NOTHING, ViewingOption.SHOW_NAME, ViewingOption.DATE),
+            subscriber.values()
+        )
+    }
+
     @AfterEach
     fun tearDown() {
         disposable.dispose()
