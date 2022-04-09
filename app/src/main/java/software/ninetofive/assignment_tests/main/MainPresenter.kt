@@ -15,6 +15,7 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
 
     private val mutableViewingOptionLiveData = MutableLiveData(appPreferences.getViewingOption())
     val viewingOptionLiveData: LiveData<ViewingOption> = mutableViewingOptionLiveData
+
     private val viewingOptionsSubject: FlowableProcessor<ViewingOption> = PublishProcessor.create()
 
     val viewingOptionFlowable: Flowable<ViewingOption> = viewingOptionsSubject
@@ -28,6 +29,7 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
     fun selectViewingOption(viewingOption: ViewingOption) {
         viewingOptionsSubject.onNext(viewingOption)
         appPreferences.setViewingOption(viewingOption)
+        mutableViewingOptionLiveData.value = viewingOption
     }
 
     fun isValidDotChecked(): Boolean = appPreferences.shouldShowValidDot()
