@@ -78,6 +78,7 @@ class LoadSettingsTest {
     fun validDotToggling() {
         presenter.setValidDotVisibility(true)
         assertTrue(presenter.isValidDotChecked())
+        assertEquals(true, appPreferences.shouldShowValidDot())
     }
 
     @AfterEach
