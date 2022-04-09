@@ -44,6 +44,13 @@ class LoadSettingsTest {
         assertEquals(SCREEN_B, appPreferences.getStartScreen())
     }
 
+    @Test
+    fun defaultViewingOption() {
+        val subscriber = presenter.viewingOptionFlowable.test()
+
+        assertEquals(ViewingOption.NOTHING, subscriber.values().last())
+    }
+
     @AfterEach
     fun tearDown() {
         disposable.dispose()
