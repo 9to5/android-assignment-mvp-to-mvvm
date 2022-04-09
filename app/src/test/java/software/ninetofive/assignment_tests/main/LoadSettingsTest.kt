@@ -7,19 +7,17 @@ import software.ninetofive.assignment_tests.utils.InMemorySharedPreferences
 
 class LoadSettingsTest {
 
+    private val appPreferences = AppPreferences(InMemorySharedPreferences())
+    private val presenter = MainPresenter(appPreferences)
+
     @Test
     fun defaultSelectedScreen() {
-        val appPreferences = AppPreferences(InMemorySharedPreferences())
-        val presenter = MainPresenter(appPreferences)
         val subscriber = presenter.onScreenSelectedFlowable.test()
 
         assertEquals(SelectedScreen.SCREEN_C, subscriber.values().last())
     }
-
     @Test
     fun selectedScreenSelection() {
-        val appPreferences = AppPreferences(InMemorySharedPreferences())
-        val presenter = MainPresenter(appPreferences)
         val subscriber = presenter.onScreenSelectedFlowable.test()
 
         presenter.selectScreen(SelectedScreen.SCREEN_B)
