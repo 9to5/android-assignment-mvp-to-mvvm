@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_start_screen)
         setupToolbar()
+        setupSelectStartScreenOptions()
+        setupSelectedScreenObserver()
         // Little hack to force radio buttons on the right. After enabled RTL everything is still ok.
         arrayOf(radio_screen_a, radio_screen_b, radio_screen_c, radio_show_name, radio_show_date, radio_show_nothing)
             .forEach { ViewCompat.setLayoutDirection(it, ViewCompat.LAYOUT_DIRECTION_RTL) }
@@ -32,21 +34,8 @@ class MainActivity : AppCompatActivity() {
         valid_dot_switch.setOnCheckedChangeListener { buttonView, isChecked -> presenter.setValidDotVisibility(isChecked) }
 
         compositeDisposable.addAll(
-            presenter.onScreenSelectedFlowable
-                .subscribe(::onScreenSelected),
             presenter.viewingOptionFlowable
                 .subscribe(::onViewingOptionSelected),
-            RxRadioGroup.checkedChanges(radio_group_select_screen)
-                .skipInitialValue()
-                .map {
-                    when (it) {
-                        R.id.radio_screen_a -> SelectedScreen.SCREEN_A
-                        R.id.radio_screen_b -> SelectedScreen.SCREEN_C
-                        R.id.radio_screen_c -> SelectedScreen.SCREEN_B
-                        else -> throw RuntimeException("Unknown select screen for id: $it")
-                    }
-                }
-                .subscribe { presenter.selectScreen(it) },
             RxRadioGroup.checkedChanges(radio_group_viewing_options)
                 .skipInitialValue()
                 .map {
@@ -59,6 +48,22 @@ class MainActivity : AppCompatActivity() {
                 }
                 .subscribe { presenter.selectViewingOption(it) }
         )
+    }
+
+    private fun setupSelectedScreenObserver() {
+        presenter.selectedScreenLiveData.observe(this) {
+            onScreenSelected(it)
+        }
+    }
+
+    private fun setupSelectStartScreenOptions() {
+        radio_group_select_screen.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.radio_screen_a -> SelectedScreen.SCREEN_A
+                R.id.radio_screen_b -> SelectedScreen.SCREEN_C
+                R.id.radio_screen_c -> SelectedScreen.SCREEN_B
+            }
+        }
     }
 
     private fun onScreenSelected(selectedScreen: SelectedScreen) = when (selectedScreen) {
