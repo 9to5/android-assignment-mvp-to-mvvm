@@ -16,12 +16,6 @@ class MainViewModel @Inject constructor(
     private val mutableScreenState = MutableLiveData(ScreenState())
     val screenState: LiveData<ScreenState> = mutableScreenState
 
-    private val mutableSelectedScreenLiveData = MutableLiveData(appPreferences.getStartScreen())
-    val selectedScreenLiveData: LiveData<SelectedScreen> = mutableSelectedScreenLiveData
-
-    private val mutableViewingOptionLiveData = MutableLiveData(appPreferences.getViewingOption())
-    val viewingOptionLiveData: LiveData<ViewingOption> = mutableViewingOptionLiveData
-
     fun loadSettings() {
         val selectedScreen = appPreferences.getStartScreen()
         val viewingOption = appPreferences.getViewingOption()
@@ -31,13 +25,11 @@ class MainViewModel @Inject constructor(
 
     fun selectScreen(selectedScreen: SelectedScreen) {
         appPreferences.setStartScreen(selectedScreen)
-        mutableSelectedScreenLiveData.value = selectedScreen
         mutableScreenState.update { it.copy(selectedScreen = selectedScreen) }
     }
 
     fun selectViewingOption(viewingOption: ViewingOption) {
         appPreferences.setViewingOption(viewingOption)
-        mutableViewingOptionLiveData.value = viewingOption
         mutableScreenState.update { it.copy(viewingOption = viewingOption) }
     }
 

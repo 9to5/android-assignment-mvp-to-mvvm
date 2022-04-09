@@ -1,6 +1,6 @@
 package software.ninetofive.assignment_tests.main
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import software.ninetofive.assignment_tests.InstantTaskExecutorExtension
@@ -18,21 +18,17 @@ class LoadSettingsTest {
 
     @Test
     fun defaultSelectedScreen() {
-        assertEquals(SCREEN_C, viewModel.selectedScreenLiveData.value)
         assertEquals(ScreenState(selectedScreen = SCREEN_C), viewModel.screenState.value)
     }
 
     @Test
     fun selectedScreenSelection() {
-        val selectedScreenObservedValues = mutableListOf<SelectedScreen>()
         val observedStateValues = mutableListOf<ScreenState>()
-        viewModel.selectedScreenLiveData.observeForever { selectedScreenObservedValues.add(it) }
         viewModel.screenState.observeForever { observedStateValues.add(it) }
 
         viewModel.selectScreen(SCREEN_B)
         viewModel.selectScreen(SCREEN_A)
 
-        assertEquals(listOf(SCREEN_C, SCREEN_B, SCREEN_A), selectedScreenObservedValues)
         assertEquals(
             listOf(
                 ScreenState(selectedScreen = SCREEN_C),
@@ -52,21 +48,17 @@ class LoadSettingsTest {
 
     @Test
     fun defaultViewingOption() {
-        assertEquals(NOTHING, viewModel.viewingOptionLiveData.value)
         assertEquals(ScreenState(viewingOption = NOTHING), viewModel.screenState.value)
     }
 
     @Test
     fun selectedViewSelection() {
         val observedValues = mutableListOf<ScreenState>()
-        val viewingOptionObservedValues = mutableListOf<ViewingOption>()
-        viewModel.viewingOptionLiveData.observeForever { viewingOptionObservedValues.add(it) }
         viewModel.screenState.observeForever { observedValues.add(it) }
 
         viewModel.selectViewingOption(SHOW_NAME)
         viewModel.selectViewingOption(DATE)
 
-        assertEquals(listOf(NOTHING, SHOW_NAME, DATE), viewingOptionObservedValues)
         assertEquals(
             listOf(
                 ScreenState(viewingOption = NOTHING),
