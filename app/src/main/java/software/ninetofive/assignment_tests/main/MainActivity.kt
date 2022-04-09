@@ -3,9 +3,7 @@ package software.ninetofive.assignment_tests.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import com.jakewharton.rxbinding2.widget.RxRadioGroup
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_choose_start_screen.*
 import kotlinx.android.synthetic.main.choose_viewing_options.*
 import kotlinx.android.synthetic.main.choose_start_screen.*
@@ -17,8 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var presenter: MainPresenter
-
-    protected val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         valid_dot_switch.isChecked = presenter.isValidDotChecked()
         valid_dot_switch.setOnCheckedChangeListener { buttonView, isChecked -> presenter.setValidDotVisibility(isChecked) }
-
-        compositeDisposable.addAll()
     }
 
     private fun setupLiveDataObservers() {
@@ -84,5 +78,4 @@ class MainActivity : AppCompatActivity() {
             setTitle(R.string.choose_start_screen_title)
         }
     }
-
 }
