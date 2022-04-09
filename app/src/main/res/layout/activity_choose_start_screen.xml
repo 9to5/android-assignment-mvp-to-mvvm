@@ -28,7 +28,9 @@
         android:gravity="center"
         android:text="@string/choose_start_screen_header" />
 
-    <include layout="@layout/choose_start_screen"/>
+    <include
+        android:id="@+id/choose_start_screen"
+        layout="@layout/choose_start_screen"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -37,7 +39,9 @@
         android:gravity="center"
         android:text="@string/check_view_options_label"/>
 
-    <include layout="@layout/choose_viewing_options"/>
+    <include
+        android:id="@+id/choose_viewing_options"
+        layout="@layout/choose_viewing_options"/>
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/valid_dot_switch"

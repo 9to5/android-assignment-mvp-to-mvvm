@@ -1,84 +1,100 @@
 package software.ninetofive.assignment_tests.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import com.jakewharton.rxbinding2.widget.RxRadioGroup
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_choose_start_screen.*
-import kotlinx.android.synthetic.main.choose_viewing_options.*
-import kotlinx.android.synthetic.main.choose_start_screen.*
 import software.ninetofive.assignment_tests.R
-import javax.inject.Inject
+import software.ninetofive.assignment_tests.databinding.ActivityChooseStartScreenBinding
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var presenter: MainPresenter
-
-    protected val compositeDisposable = CompositeDisposable()
+    private val viewModel by viewModels<MainViewModel>()
+    private val binding by lazy { ActivityChooseStartScreenBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose_start_screen)
+        setContentView(binding.root)
+        setupUI()
+        setupLiveDataObserver()
+        viewModel.loadSettings()
+    }
+
+    private fun setupUI() {
         setupToolbar()
-        // Little hack to force radio buttons on the right. After enabled RTL everything is still ok.
-        arrayOf(radio_screen_a, radio_screen_b, radio_screen_c, radio_show_name, radio_show_date, radio_show_nothing)
-            .forEach { ViewCompat.setLayoutDirection(it, ViewCompat.LAYOUT_DIRECTION_RTL) }
-
-        valid_dot_switch.isChecked = presenter.isValidDotChecked()
-        valid_dot_switch.setOnCheckedChangeListener { buttonView, isChecked -> presenter.setValidDotVisibility(isChecked) }
-
-        compositeDisposable.addAll(
-            presenter.dispose(),
-            presenter.onScreenSelectedFlowable
-                .subscribe(::onScreenSelected),
-            presenter.viewingOptionFlowable
-                .subscribe(::onViewingOptionSelected),
-            RxRadioGroup.checkedChanges(radio_group_select_screen)
-                .skipInitialValue()
-                .map {
-                    when (it) {
-                        R.id.radio_screen_a -> SelectedScreen.SCREEN_A
-                        R.id.radio_screen_b -> SelectedScreen.SCREEN_C
-                        R.id.radio_screen_c -> SelectedScreen.SCREEN_B
-                        else -> throw RuntimeException("Unknown select screen for id: $it")
-                    }
-                }
-                .subscribe { presenter.selectScreen(it) },
-            RxRadioGroup.checkedChanges(radio_group_viewing_options)
-                .skipInitialValue()
-                .map {
-                    when (it) {
-                        R.id.radio_show_name -> ViewingOption.SHOW_NAME
-                        R.id.radio_show_date -> ViewingOption.DATE
-                        R.id.radio_show_nothing -> ViewingOption.NOTHING
-                        else -> throw RuntimeException("Unknown viewing option for id: $it")
-                    }
-                }
-                .subscribe { presenter.selectViewingOption(it) }
-        )
-    }
-
-    private fun onScreenSelected(selectedScreen: SelectedScreen) = when (selectedScreen) {
-        SelectedScreen.SCREEN_A -> radio_screen_a.isChecked = true
-        SelectedScreen.SCREEN_C -> radio_screen_b.isChecked = true
-        SelectedScreen.SCREEN_B -> radio_screen_c.isChecked = true
-    }
-
-    private fun onViewingOptionSelected(viewingOption: ViewingOption) = when (viewingOption) {
-        ViewingOption.SHOW_NAME -> radio_show_name.isChecked = true
-        ViewingOption.DATE -> radio_show_date.isChecked = true
-        ViewingOption.NOTHING -> radio_show_nothing.isChecked = true
+        forceRadioButtonsToCorrectPosition()
+        setupSelectStartScreenOptions()
+        setupViewingOptions()
+        setupValidDotSwitch()
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(location_choose_start_screen)
+        setSupportActionBar(binding.locationChooseStartScreen)
         supportActionBar?.apply {
             setTitle(R.string.choose_start_screen_title)
         }
     }
 
+    private fun forceRadioButtonsToCorrectPosition() {
+        arrayOf(
+            binding.chooseStartScreen.radioScreenA,
+            binding.chooseStartScreen.radioScreenB,
+            binding.chooseStartScreen.radioScreenC,
+            binding.chooseViewingOptions.radioShowName,
+            binding.chooseViewingOptions.radioShowDate,
+            binding.chooseViewingOptions.radioShowNothing
+        ).forEach { ViewCompat.setLayoutDirection(it, ViewCompat.LAYOUT_DIRECTION_RTL) }
+    }
+
+    private fun setupSelectStartScreenOptions() {
+        binding.chooseStartScreen.radioGroupSelectScreen.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.radio_screen_a -> SelectedScreen.SCREEN_A
+                R.id.radio_screen_b -> SelectedScreen.SCREEN_C
+                R.id.radio_screen_c -> SelectedScreen.SCREEN_B
+            }
+        }
+    }
+
+    private fun setupViewingOptions() {
+        binding.chooseViewingOptions.radioGroupViewingOptions.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.radio_show_name -> ViewingOption.SHOW_NAME
+                R.id.radio_show_date -> ViewingOption.DATE
+                R.id.radio_show_nothing -> ViewingOption.NOTHING
+            }
+        }
+    }
+
+    private fun setupValidDotSwitch() {
+        binding.validDotSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setValidDotVisibility(isChecked)
+        }
+    }
+
+    private fun setupLiveDataObserver() {
+        viewModel.screenState.observe(this) {
+            onScreenSelected(it.selectedScreen)
+            onViewingOptionSelected(it.viewingOption)
+            onValidDotToggled(it.isValidDotChecked)
+        }
+    }
+
+    private fun onScreenSelected(selectedScreen: SelectedScreen) = when (selectedScreen) {
+        SelectedScreen.SCREEN_A -> binding.chooseStartScreen.radioScreenA.isChecked = true
+        SelectedScreen.SCREEN_C -> binding.chooseStartScreen.radioScreenB.isChecked = true
+        SelectedScreen.SCREEN_B -> binding.chooseStartScreen.radioScreenC.isChecked = true
+    }
+
+    private fun onViewingOptionSelected(viewingOption: ViewingOption) = when (viewingOption) {
+        ViewingOption.SHOW_NAME -> binding.chooseViewingOptions.radioShowName.isChecked = true
+        ViewingOption.DATE -> binding.chooseViewingOptions.radioShowDate.isChecked = true
+        ViewingOption.NOTHING -> binding.chooseViewingOptions.radioShowNothing.isChecked = true
+    }
+
+    private fun onValidDotToggled(validDotChecked: Boolean) {
+        binding.validDotSwitch.isChecked = validDotChecked
+    }
 }
