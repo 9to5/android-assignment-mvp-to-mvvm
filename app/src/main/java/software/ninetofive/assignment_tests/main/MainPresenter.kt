@@ -25,6 +25,7 @@ class MainPresenter @Inject constructor(private val appPreferences: AppPreferenc
     fun selectScreen(selectedScreen: SelectedScreen) {
         selectScreenSubject.onNext(selectedScreen)
         appPreferences.setStartScreen(selectedScreen)
+        mutableSelectedScreenLiveData.value = selectedScreen
     }
 
     fun selectViewingOption(viewingOption: ViewingOption) {
