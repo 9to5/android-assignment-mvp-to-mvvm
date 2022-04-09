@@ -15,4 +15,23 @@ class LoadSettingsTest {
 
         assertEquals(SelectedScreen.SCREEN_C, subscriber.values().last())
     }
+
+    @Test
+    fun selectedScreenSelection() {
+        val appPreferences = AppPreferences(InMemorySharedPreferences())
+        val presenter = MainPresenter(appPreferences)
+        val subscriber = presenter.onScreenSelectedFlowable.test()
+
+        presenter.selectScreen(SelectedScreen.SCREEN_B)
+        presenter.selectScreen(SelectedScreen.SCREEN_A)
+
+        assertEquals(
+            listOf(
+                SelectedScreen.SCREEN_C,
+                SelectedScreen.SCREEN_B,
+                SelectedScreen.SCREEN_A
+            ),
+            subscriber.values()
+        )
+    }
 }
