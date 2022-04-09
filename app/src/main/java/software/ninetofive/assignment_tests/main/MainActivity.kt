@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_choose_start_screen)
         setupToolbar()
         setupSelectStartScreenOptions()
-        setupSelectedScreenObserver()
+        setupViewingOptions()
+        setupLiveDataObservers()
         // Little hack to force radio buttons on the right. After enabled RTL everything is still ok.
         arrayOf(radio_screen_a, radio_screen_b, radio_screen_c, radio_show_name, radio_show_date, radio_show_nothing)
             .forEach { ViewCompat.setLayoutDirection(it, ViewCompat.LAYOUT_DIRECTION_RTL) }
@@ -33,26 +34,15 @@ class MainActivity : AppCompatActivity() {
         valid_dot_switch.isChecked = presenter.isValidDotChecked()
         valid_dot_switch.setOnCheckedChangeListener { buttonView, isChecked -> presenter.setValidDotVisibility(isChecked) }
 
-        compositeDisposable.addAll(
-            presenter.viewingOptionFlowable
-                .subscribe(::onViewingOptionSelected),
-            RxRadioGroup.checkedChanges(radio_group_viewing_options)
-                .skipInitialValue()
-                .map {
-                    when (it) {
-                        R.id.radio_show_name -> ViewingOption.SHOW_NAME
-                        R.id.radio_show_date -> ViewingOption.DATE
-                        R.id.radio_show_nothing -> ViewingOption.NOTHING
-                        else -> throw RuntimeException("Unknown viewing option for id: $it")
-                    }
-                }
-                .subscribe { presenter.selectViewingOption(it) }
-        )
+        compositeDisposable.addAll()
     }
 
-    private fun setupSelectedScreenObserver() {
+    private fun setupLiveDataObservers() {
         presenter.selectedScreenLiveData.observe(this) {
             onScreenSelected(it)
+        }
+        presenter.viewingOptionLiveData.observe(this) {
+            onViewingOptionSelected(it)
         }
     }
 
@@ -62,6 +52,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.radio_screen_a -> SelectedScreen.SCREEN_A
                 R.id.radio_screen_b -> SelectedScreen.SCREEN_C
                 R.id.radio_screen_c -> SelectedScreen.SCREEN_B
+            }
+        }
+    }
+
+    private fun setupViewingOptions() {
+        radio_group_viewing_options.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.radio_show_name -> ViewingOption.SHOW_NAME
+                R.id.radio_show_date -> ViewingOption.DATE
+                R.id.radio_show_nothing -> ViewingOption.NOTHING
             }
         }
     }
