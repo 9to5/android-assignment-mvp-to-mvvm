@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_start_screen)
         setupUI()
-        setupLiveDataObservers()
+        setupLiveDataObserver()
+        viewModel.loadSettings()
     }
 
     private fun setupUI() {
@@ -69,18 +70,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupValidDotSwitch() {
-        valid_dot_switch.isChecked = viewModel.isValidDotChecked()
         valid_dot_switch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setValidDotVisibility(isChecked)
         }
     }
 
-    private fun setupLiveDataObservers() {
-        viewModel.selectedScreenLiveData.observe(this) {
-            onScreenSelected(it)
-        }
-        viewModel.viewingOptionLiveData.observe(this) {
-            onViewingOptionSelected(it)
+    private fun setupLiveDataObserver() {
+        viewModel.screenState.observe(this) {
+            onScreenSelected(it.selectedScreen)
+            onViewingOptionSelected(it.viewingOption)
+            onValidDotToggled(it.isValidDotChecked)
         }
     }
 
@@ -94,5 +93,9 @@ class MainActivity : AppCompatActivity() {
         ViewingOption.SHOW_NAME -> radio_show_name.isChecked = true
         ViewingOption.DATE -> radio_show_date.isChecked = true
         ViewingOption.NOTHING -> radio_show_nothing.isChecked = true
+    }
+
+    private fun onValidDotToggled(validDotChecked: Boolean) {
+        valid_dot_switch.isChecked = validDotChecked
     }
 }
