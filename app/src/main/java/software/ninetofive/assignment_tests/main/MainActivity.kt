@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var presenter: MainPresenter
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,17 +70,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupValidDotSwitch() {
-        valid_dot_switch.isChecked = presenter.isValidDotChecked()
+        valid_dot_switch.isChecked = viewModel.isValidDotChecked()
         valid_dot_switch.setOnCheckedChangeListener { _, isChecked ->
-            presenter.setValidDotVisibility(isChecked)
+            viewModel.setValidDotVisibility(isChecked)
         }
     }
 
     private fun setupLiveDataObservers() {
-        presenter.selectedScreenLiveData.observe(this) {
+        viewModel.selectedScreenLiveData.observe(this) {
             onScreenSelected(it)
         }
-        presenter.viewingOptionLiveData.observe(this) {
+        viewModel.viewingOptionLiveData.observe(this) {
             onViewingOptionSelected(it)
         }
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import software.ninetofive.assignment_tests.utils.AppPreferences
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(private val appPreferences: AppPreferences) {
+class MainViewModel @Inject constructor(private val appPreferences: AppPreferences) {
 
     private val mutableSelectedScreenLiveData = MutableLiveData(appPreferences.getStartScreen())
     val selectedScreenLiveData: LiveData<SelectedScreen> = mutableSelectedScreenLiveData

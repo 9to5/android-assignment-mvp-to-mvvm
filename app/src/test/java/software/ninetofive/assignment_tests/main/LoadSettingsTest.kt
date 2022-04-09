@@ -13,63 +13,63 @@ import software.ninetofive.assignment_tests.utils.InMemorySharedPreferences
 class LoadSettingsTest {
 
     private val appPreferences = AppPreferences(InMemorySharedPreferences())
-    private val presenter = MainPresenter(appPreferences)
+    private val viewModel = MainViewModel(appPreferences)
 
     @Test
     fun defaultSelectedScreen() {
-        assertEquals(SCREEN_C, presenter.selectedScreenLiveData.value)
+        assertEquals(SCREEN_C, viewModel.selectedScreenLiveData.value)
     }
 
     @Test
     fun selectedScreenSelection() {
         val selectedScreenObservedValues = mutableListOf<SelectedScreen>()
-        presenter.selectedScreenLiveData.observeForever { selectedScreenObservedValues.add(it) }
+        viewModel.selectedScreenLiveData.observeForever { selectedScreenObservedValues.add(it) }
 
-        presenter.selectScreen(SCREEN_B)
-        presenter.selectScreen(SCREEN_A)
+        viewModel.selectScreen(SCREEN_B)
+        viewModel.selectScreen(SCREEN_A)
 
         assertEquals(listOf(SCREEN_C, SCREEN_B, SCREEN_A), selectedScreenObservedValues)
     }
 
     @Test
     fun storingScreenSelection() {
-        presenter.selectScreen(SCREEN_B)
+        viewModel.selectScreen(SCREEN_B)
 
         assertEquals(SCREEN_B, appPreferences.getStartScreen())
     }
 
     @Test
     fun defaultViewingOption() {
-        assertEquals(NOTHING, presenter.viewingOptionLiveData.value)
+        assertEquals(NOTHING, viewModel.viewingOptionLiveData.value)
     }
 
     @Test
     fun selectedViewSelection() {
         val viewingOptionObservedValues = mutableListOf<ViewingOption>()
-        presenter.viewingOptionLiveData.observeForever { viewingOptionObservedValues.add(it) }
+        viewModel.viewingOptionLiveData.observeForever { viewingOptionObservedValues.add(it) }
 
-        presenter.selectViewingOption(SHOW_NAME)
-        presenter.selectViewingOption(DATE)
+        viewModel.selectViewingOption(SHOW_NAME)
+        viewModel.selectViewingOption(DATE)
 
         assertEquals(listOf(NOTHING, SHOW_NAME, DATE), viewingOptionObservedValues)
     }
 
     @Test
     fun storingViewingOptionSelection() {
-        presenter.selectViewingOption(SHOW_NAME)
+        viewModel.selectViewingOption(SHOW_NAME)
 
         assertEquals(SHOW_NAME, appPreferences.getViewingOption())
     }
 
     @Test
     fun defaultValidDotCheckedOption() {
-        assertFalse(presenter.isValidDotChecked())
+        assertFalse(viewModel.isValidDotChecked())
     }
 
     @Test
     fun validDotToggling() {
-        presenter.setValidDotVisibility(true)
-        assertTrue(presenter.isValidDotChecked())
+        viewModel.setValidDotVisibility(true)
+        assertTrue(viewModel.isValidDotChecked())
         assertEquals(true, appPreferences.shouldShowValidDot())
     }
 }
